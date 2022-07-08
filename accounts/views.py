@@ -38,3 +38,19 @@ class RegisterView(APIView):
                 status=status.HTTPS_500_INTERNAL_SERVER_ERROR
             )
 
+class UserView(APIView):
+    def get(self, request):
+        try:
+            user = request.user
+            user = UserSerializer(user)
+
+            return Response(
+                {'user': user.data},
+                status=status.HTTP_200_OK
+            )
+        except:
+            return Response(
+                {'error': 'ユーザーの取得に問題が発生しました'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
